@@ -2,12 +2,12 @@ import { absurd } from 'fp-ts/function'
 import * as NEA from 'fp-ts/NonEmptyArray'
 import { Direction } from '..'
 
-interface Position {
+export interface Position {
   horizontal: number
   depth: number
 }
 
-const initialPosition: Position = {
+export const initialPosition: Position = {
   horizontal: 0,
   depth: 0,
 }
