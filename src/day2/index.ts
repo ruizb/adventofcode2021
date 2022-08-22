@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 import { EOL } from 'os'
 import { getFileContents, srcRoot } from '../getFileContents'
-import { pipe, absurd } from 'fp-ts/function'
+import { pipe } from 'fp-ts/function'
 import * as TE from 'fp-ts/TaskEither'
 import * as NEA from 'fp-ts/NonEmptyArray'
 
@@ -27,7 +27,7 @@ export const getDirections = pipe(
     pipe(
       fileContents.split(EOL) as NEA.NonEmptyArray<string>,
       NEA.init,
-      m => m as NEA.NonEmptyArray<string>,
+      d => d as NEA.NonEmptyArray<string>,
       NEA.map(getDirection)
     )
   )
