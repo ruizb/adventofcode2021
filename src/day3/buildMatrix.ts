@@ -15,6 +15,16 @@ export type Matrix = NEA.NonEmptyArray<NEA.NonEmptyArray<Bit>>
 
 const diagnosticNumberSize = 12
 
+export const getMostCommonBit: (bits: Bit[]) => Bit = flow(
+  A.reduce({ '0': 0, '1': 0 }, (occurrences, bit) => ({
+    ...occurrences,
+    [bit]: occurrences[bit] + 1,
+  })),
+  occurrences => (occurrences[0] > occurrences[1] ? '0' : '1')
+)
+
+export const invertBit = (bit: Bit): Bit => (bit === '0' ? '1' : '0')
+
 const initMatrix = (firstDiagnosticNumber: DiagnosticNumber): Matrix =>
   pipe(
     diagnosticNumberSize,

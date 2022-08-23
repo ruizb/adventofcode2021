@@ -7,7 +7,7 @@ import {
   computePowerConsumption,
 } from './computePowerConsumption'
 
-describe('getFinalPosition', () => {
+describe('computePowerConsumption', () => {
   it('should solve puzzle from adventofcode', async () => {
     const fileContents = ((await getInputFileContents()) as Right<string>).right
     const matrix = (getMatrix(fileContents) as Right<Matrix>).right
