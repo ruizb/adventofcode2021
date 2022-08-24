@@ -21,7 +21,7 @@ const matrix = [
 
 _After finishing day 3 part 2, in retrospect, I'm convinced I could come up with a simpler solution than the one based on a `Matrix`._
 
-Validating the input by building a `Matrix` [here](../buildMatrix.ts) pushed me into using more `fp-ts`:
+Validating the input by building a `Matrix` [here](./buildMatrix.ts) pushed me into using more `fp-ts`:
 
 ```ts
 export const buildMatrix: (
@@ -66,7 +66,7 @@ If I didn't need the index of the line for the error messages, I could've used `
 
 Speaking of the next step, I used `NEA.reduce` to transform the list of `DiagnosticNumber`s into a `Matrix`.
 
-Other than within this `buildMatrix` function, there is a bunch of `reduce` calls here and there to build the `Matrix`. _After completing day 3 part 2, I think some complexity due to these reducers can be removed, using a simpler data structure than `Matrix`_.
+Other than within this `buildMatrix` function, there is also a bunch of `A.reduce` and `RNEA.reduceWithIndex` calls here and there in this module. _After completing day 3 part 2, I think some complexity due to these reducers can be removed, using a simpler data structure than `Matrix`_.
 
 Let's open [computePowerConsumption.ts](./computePowerConsumption.ts), which contains another interesting part, in the `computeRates` function:
 

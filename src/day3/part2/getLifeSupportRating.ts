@@ -2,7 +2,7 @@ import { pipe, flow } from 'fp-ts/function'
 import * as A from 'fp-ts/Array'
 import * as E from 'fp-ts/Either'
 import * as R from 'fp-ts/Record'
-import { Bit } from '../buildMatrix'
+import { Bit } from '..'
 import { parseBinToDec } from '../..'
 
 interface Ratings {

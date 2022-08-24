@@ -1,13 +1,11 @@
 import { pipe, flow, unsafeCoerce, increment, tuple } from 'fp-ts/function'
 import * as E from 'fp-ts/Either'
 import * as A from 'fp-ts/Array'
-import * as RA from 'fp-ts/ReadonlyArray'
 import * as NEA from 'fp-ts/NonEmptyArray'
 import * as RNEA from 'fp-ts/ReadonlyNonEmptyArray'
 import * as T from 'fp-ts/Tuple'
 import * as S from 'fp-ts/string'
-
-export type Bit = '0' | '1'
+import { Bit } from '..'
 
 type DiagnosticNumber = RNEA.ReadonlyNonEmptyArray<Bit>
 

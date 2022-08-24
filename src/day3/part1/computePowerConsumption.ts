@@ -2,7 +2,7 @@ import { pipe, flow } from 'fp-ts/function'
 import * as NEA from 'fp-ts/NonEmptyArray'
 import * as S from 'fp-ts/string'
 import * as R from 'fp-ts/Record'
-import { getMostCommonBit, invertBit, Matrix } from '../buildMatrix'
+import { getMostCommonBit, invertBit, Matrix } from './buildMatrix'
 import { parseBinToDec } from '../..'
 
 interface Rates {

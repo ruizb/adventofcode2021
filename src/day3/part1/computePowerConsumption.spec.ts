@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { Right, left } from 'fp-ts/Either'
-import { Matrix } from '../buildMatrix'
-import { getMatrix, getInputFileContents } from '..'
+import { Matrix } from './buildMatrix'
+import { getMatrix } from '.'
+import { getInputFileContents } from '..'
 import {
   computeRates,
   computePowerConsumption,
