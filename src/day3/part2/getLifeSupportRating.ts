@@ -1,5 +1,7 @@
 import { pipe, flow } from 'fp-ts/function'
 import * as A from 'fp-ts/Array'
+import * as E from 'fp-ts/Either'
+import * as R from 'fp-ts/Record'
 import { Bit } from '../buildMatrix'
 import { parseBinToDec } from '../..'
 
@@ -39,27 +41,44 @@ const getLinesForCO2Rating = (linesByBit: LinesByBit): string[] => {
 const isSingleton = <A>(as: A[]): as is [A] => as.length === 1
 
 const getRatingRec =
-  (cursor: number, getLinesForRating: (linesByBit: LinesByBit) => string[]) =>
-  (lines: string[]): number =>
+  (
+    label: string,
+    cursor: number,
+    getLinesForRating: (linesByBit: LinesByBit) => string[]
+  ) =>
+  (lines: string[]): E.Either<string, number> =>
     isSingleton(lines)
-      ? parseBinToDec(lines[0])
+      ? pipe(lines[0], parseBinToDec, E.of)
       : pipe(
           lines,
-          getLinesByBit(cursor),
-          getLinesForRating,
-          getRatingRec(cursor + 1, getLinesForRating)
+          E.fromPredicate(
+            lines => new Set(lines).size > 1,
+            () => `Duplicate lines detected for ${label} rating`
+          ),
+          E.map(flow(getLinesByBit(cursor), getLinesForRating)),
+          E.filterOrElse(
+            linesForRating => linesForRating.length > 0,
+            () => `No more lines available to compute ${label} rating`
+          ),
+          E.chain(getRatingRec(label, cursor + 1, getLinesForRating))
         )
 
-const getOxygenRating = getRatingRec(0, getLinesForOxygenRating)
+const getOxygenRating = getRatingRec('oxygen', 0, getLinesForOxygenRating)
 
-const getCO2Rating = getRatingRec(0, getLinesForCO2Rating)
+const getCO2Rating = getRatingRec('co2', 0, getLinesForCO2Rating)
 
-const getRatings = (lines: string[]): Ratings => ({
-  oxygen: getOxygenRating(lines),
-  co2: getCO2Rating(lines),
-})
+const getRatings = (lines: string[]): E.Either<string[], Ratings> =>
+  pipe(
+    {
+      oxygen: pipe(getOxygenRating(lines), E.mapLeft(A.of)),
+      co2: pipe(getCO2Rating(lines), E.mapLeft(A.of)),
+    },
+    R.sequence(E.getApplicativeValidation(A.getSemigroup<string>()))
+  )
 
-export const getLifeSupportRating: (lines: string[]) => number = flow(
+export const getLifeSupportRating: (
+  lines: string[]
+) => E.Either<string[], number> = flow(
   getRatings,
-  ({ oxygen, co2 }) => oxygen * co2
+  E.map(({ oxygen, co2 }) => oxygen * co2)
 )

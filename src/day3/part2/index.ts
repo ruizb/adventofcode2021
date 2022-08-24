@@ -1,8 +1,10 @@
 import { EOL } from 'os'
 
 import { pipe, flow } from 'fp-ts/function'
+import * as T from 'fp-ts/Task'
 import * as TE from 'fp-ts/TaskEither'
-import * as E from 'fp-ts/Either'
+import * as A from 'fp-ts/lib/Array'
+import * as E from 'fp-ts/lib/Either'
 import * as NEA from 'fp-ts/lib/NonEmptyArray'
 
 import { getLifeSupportRating } from './getLifeSupportRating'
@@ -18,6 +20,7 @@ export const getLines = (fileContents: string): string[] =>
 
 pipe(
   getInputFileContents,
-  TE.chainEitherK(flow(getLines, getLifeSupportRating, E.of<string, any>)),
+  T.map(E.mapLeft(A.of)), // string => string[]
+  TE.chainEitherK(flow(getLines, getLifeSupportRating)),
   toFinalProgram
 )()
