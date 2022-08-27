@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import * as E from 'fp-ts/Either'
-import { getLines } from '.'
+import { getLines } from '../..'
 import { getLifeSupportRating } from './getLifeSupportRating'
 import { getInputFileContents } from '../'
 

@@ -30,6 +30,7 @@
     }
   },
   "dependencies": {
-    "fp-ts": "^2.12.2"
+    "fp-ts": "^2.12.2",
+    "monocle-ts": "^2.3.13"
   }
 }
