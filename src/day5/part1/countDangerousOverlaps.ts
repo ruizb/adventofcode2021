@@ -8,7 +8,7 @@ import * as Tr from 'monocle-ts/Traversal'
 import { Board, Line, Point } from '.'
 
 // Supports only horizontal and vertical lines
-const getPointsCoveredByLine = ({
+export const getPointsCoveredByLine = ({
   start: { x: x0, y: y0 },
   end: { x: x1, y: y1 },
 }: Line): Point[] =>
@@ -41,7 +41,7 @@ const getMaxXY = (lines: NEA.NonEmptyArray<Line>): [x: number, y: number] =>
     )
   )
 
-const initBoard: (lines: NEA.NonEmptyArray<Line>) => Board = __(
+export const initBoard: (lines: NEA.NonEmptyArray<Line>) => Board = __(
   getMaxXY,
   ([maxX, maxY]) =>
     _(
@@ -50,7 +50,7 @@ const initBoard: (lines: NEA.NonEmptyArray<Line>) => Board = __(
     )
 )
 
-const coverPoint = (x: number, y: number): ((board: Board) => Board) =>
+export const coverPoint = (x: number, y: number): ((board: Board) => Board) =>
   _(
     Tr.id<Board>(),
     Tr.indexNonEmpty(y),
@@ -58,7 +58,7 @@ const coverPoint = (x: number, y: number): ((board: Board) => Board) =>
     Tr.modify(increment)
   )
 
-const countPointsWithDangerousOverlaps = (board: Board): number =>
+export const countPointsWithDangerousOverlaps = (board: Board): number =>
   _(
     board,
     RNEA.flatten,
